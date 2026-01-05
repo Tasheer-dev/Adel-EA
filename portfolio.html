@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Portfolio 2015-2025 | Digital Transformation & EA</title>
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #006C35; /* Saudi Green Vision 2030 */
+            --secondary-color: #1a3c5e; /* Corporate Blue */
+            --accent-color: #d4af37; /* Gold accent */
+            --text-dark: #333333;
+            --text-light: #666666;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4 {
+            color: var(--secondary-color);
+            font-weight: 700;
+        }
+        
+        a { text-decoration: none; color: inherit; }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            background: linear-gradient(rgba(26, 60, 94, 0.9), rgba(0, 108, 53, 0.8)), url('https://picsum.photos/seed/riyadh/1920/1080');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            text-align: center;
+            padding: 120px 20px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- GROUPS SECTION --- */
+        .groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .group-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+            border-bottom: 4px solid transparent;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .group-img {
+            height: 180px;
+            background-color: #ddd;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .group-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .group-title {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--secondary-color);
+        }
+
+        .group-desc {
+            font-size: 0.95rem;
+            color: var(--text-light);
+            margin-bottom: 20px;
+        }
+
+        .group-count {
+            margin-top: auto;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        /* --- PROJECT LIST SECTION (Hidden by default) --- */
+        #project-results {
+            display: none; /* Hidden until a category is selected */
+            margin-top: 40px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .back-btn {
+            display: inline-block;
+            background: transparent;
+            border: 2px solid var(--secondary-color);
+            color: var(--secondary-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .back-btn:hover {
+            background: var(--secondary-color);
+            color: var(--white);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .project-item {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--secondary-color);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .project-item:hover {
+            background: #fdfdfd;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .project-item h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .project-client {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--white);
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            border-radius: 12px;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            background: var(--secondary-color);
+            color: var(--white);
+            padding: 25px;
+            position: sticky;
+            top: 0;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .modal-body {
+            padding: 30px;
+        }
+
+        .modal-section {
+            margin-bottom: 25px;
+        }
+
+        .modal-section h4 {
+            color: var(--primary-color);
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #eef2f6;
+            color: var(--secondary-color);
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--secondary-color);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 80px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero-stats { gap: 20px; }
+            .stat-item { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <div class="container">
+            <h1>40 Projects. 10 Years. 1 Vision.</h1>
+            <p>A portfolio of Digital Transformation, Enterprise Architecture, and Governance leadership across Saudi Arabia's most critical government and private sectors.</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">40</span>
+                    <span class="stat-label">Projects Delivered</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">10</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">30+</span>
+                    <span class="stat-label">Key Clients</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="container section-padding">
+        
+        <!-- INTRO -->
+        <section style="text-align: center; max-width: 800px; margin: 0 auto 60px;">
+            <h2>Strategic Expertise</h2>
+            <p style="margin-top: 15px; color: var(--text-light);">
+                Explore a decade of impact. Select a category below to view specific projects, case studies, and deliverables.
+            </p>
+        </section>
+
+        <!-- GROUPS GRID -->
+        <section id="groups-container" class="groups-grid">
+            <!-- Groups will be injected here via JS -->
+        </section>
+
+        <!-- PROJECT LIST (Dynamically Shown) -->
+        <section id="project-results">
+            <button class="back-btn" onclick="showGroups()">← Back to Categories</button>
+            <h2 id="category-title" style="margin-bottom: 30px; color: var(--secondary-color);">Category Name</h2>
+            <div id="projects-grid" class="projects-grid">
+                <!-- Projects will be injected here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL -->
+    <div class="modal-overlay" id="project-modal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Project Title</h2>
+                <button class="close-modal" onclick="closeModalDirectly()">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-client-location" style="margin-bottom: 20px; font-size: 0.9rem; color: var(--text-light);"></div>
+                
+                <div class="modal-section">
+                    <h4>Overview</h4>
+                    <p id="modal-overview"></p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Pain Points / Challenges</h4>
+                    <p id="modal-pain"></p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Solution Implemented</h4>
+                    <p id="modal-solution"></p>
+                </div>
+
+                <div class="modal-section">
+                    <h4>Main Deliverables</h4>
+                    <ul id="modal-deliverables" class="modal-list"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Digital Transformation Portfolio. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // --- DATA: 40 Projects Categorized ---
+        const projectsData = [
+            // Group 1: Digital Transformation & Strategy
+            { id: 1, title: "National Center for Measurement – Digital Transformation", client: "National Center for Measurement", category: "Digital Transformation", overview: "Modernized assessment and evaluation methodologies, digitizing exam processes, and enhancing security using cloud and AI.", pain: "Challenges in handling large-scale exams with manual processes, security threats, and delayed result processing.", solution: "Introduced an AI-driven platform with secure proctoring and blockchain-based certificate verification.", deliverables: ["Cloud-based assessment platforms", "AI-driven result analytics", "National education systems integration", "Secure online exam delivery"] },
+            { id: 2, title: "Social Development Bank – Digital Transformation", client: "Social Development Bank", category: "Digital Transformation", overview: "Modernized financial services with an online banking ecosystem, focusing on automated risk assessments.", pain: "Long wait times, inefficient loan processing, and limited digital accessibility.", solution: "Secure, AI-powered online banking platform with automated risk analysis.", deliverables: ["Online banking portal", "AI-based risk assessment", "Mobile banking integration", "Secure API integration"] },
+            { id: 6, title: "Ministry of Transport – Digital Transformation and Data Management", client: "Ministry of Transport", category: "Digital Transformation", overview: "Optimized data management by digitizing records, implementing IoT for traffic monitoring, and using big data analytics.", pain: "Fragmented data sources, outdated manual processes, and lack of real-time insights.", solution: "Unified digital infrastructure integrating transport databases with AI-powered analytics.", deliverables: ["Centralized digital transport data platform", "AI-driven traffic analytics", "IoT integration", "Record digitalization"] },
+            { id: 10, title: "Ministry of Tourism – DX & Establishment of EA Office", client: "Ministry of Tourism", category: "Digital Transformation", overview: "Developed a structured EA framework to align digital initiatives with ministry objectives.", pain: "Managing disparate IT systems and lack of a unified digital strategy.", solution: "Comprehensive EA framework tailored to Ministry’s needs, facilitating digitalization of key processes.", deliverables: ["EA Framework", "Digital Transformation Roadmap", "Unified digital platform", "Staff training"] },
+            { id: 23, title: "Civil Affairs Digital Transformation (75 Processes)", client: "Civil Affairs", category: "Digital Transformation", overview: "Digitized and automated 75 business processes to improve service efficiency.", pain: "Paper-based workflows leading to inefficiencies and long processing times.", solution: "Digital transformation framework with AI-driven document processing and electronic approvals.", deliverables: ["Re-engineering of 75 processes", "Digital workflow platforms", "E-service portal", "Integration with national services"] },
+            { id: 35, title: "SVTS – Digital Transformation Strategy & Roadmap", client: "SVTS", category: "Digital Transformation", overview: "Led the development of a comprehensive digital strategy and executive roadmap.", pain: "Lack of strategic direction for digital initiatives.", solution: "Developed a phased roadmap aligning technology with business goals.", deliverables: ["DX Strategy Document", "Executive Roadmap", "Gap Analysis", "Implementation Plan"] },
+            { id: 36, title: "SFDA – Executive Plan for Digital Transformation", client: "SFDA", category: "Digital Transformation", overview: "Built an executive plan to guide the digital transformation of core services.", pain: "Need for structured digital planning to enhance service delivery.", solution: "Comprehensive executive plan defining phases, KPIs, and technology enablers.", deliverables: ["Executive Plan", "Service Analysis", "Technology Recommendations", "Governance Model"] },
+            { id: 38, title: "KFSC – Digital Transformation Roadmap", client: "KFSC", category: "Digital Transformation", overview: "Created a roadmap for the digital transformation of core financial services.", pain: "Operational silos and legacy systems hindering service delivery.", solution: "Roadmap focusing on cloud adoption and process automation.", deliverables: ["Digital Roadmap", "Core Service Analysis", "Modernization Strategy", "Compliance Framework"] },
+
+            // Group 2: Enterprise Architecture
+            { id: 3, title: "IKEA Jeddah – EA Office Establishment", client: "IKEA Jeddah", category: "Enterprise Architecture", overview: "Structured EA framework to streamline IT and business operations.", pain: "Managing disparate IT systems and lack of standardized processes.", solution: "Implemented TOGAF-based frameworks for unified IT strategy.", deliverables: ["EA Framework", "Business/IT alignment strategy", "Governance models", "EA tools implementation"] },
+            { id: 4, title: "SASO – EA Office Establishment", client: "SASO", category: "Enterprise Architecture", overview: "Established an EA office to streamline standardization processes.", pain: "Inefficiencies in managing multiple compliance initiatives.", solution: "Structured EA governance framework improving interdepartmental coordination.", deliverables: ["EA Framework", "Compliance models", "Governance system", "Quality control integration"] },
+            { id: 16, title: "ADAA - EA Practicing", client: "ADAA", category: "Enterprise Architecture", overview: "Enhanced EA practices to optimize organizational performance.", pain: "Difficulty aligning with evolving performance measurement standards.", solution: "Robust EA framework designed to integrate best practices.", deliverables: ["EA Assessment & Roadmap", "EA Framework", "Integration Guidelines", "Performance Tools"] },
+            { id: 17, title: "SWCC - EA Practicing and Qiyas Requirements", client: "SWCC", category: "Enterprise Architecture", overview: "Refined EA practices and aligned with Qiyas requirements.", pain: "Outdated infrastructure hindering compliance with Qiyas.", solution: "Structured EA framework providing a roadmap for compliance.", deliverables: ["EA Maturity Assessment", "Compliance Strategy", "Governance Guidelines", "Training"] },
+            { id: 19, title: "MoIM - EA Practicing and EA Office Framework", client: "Ministry of Industry & Mineral Resources", category: "Enterprise Architecture", overview: "Established an EA office to enhance governance and IT investment alignment.", pain: "Lack of formalized EA structure leading to fragmented digital initiatives.", solution: "Robust EA governance framework aligned with TOGAF.", deliverables: ["EA Office Establishment", "Governance Framework", "Policies & Guidelines", "Capacity Building"] },
+            { id: 21, title: "Saudi Post (SPL) - EA Office & Roadmap", client: "Saudi Post", category: "Enterprise Architecture", overview: "Modernized operations by establishing an EA office and digital transformation roadmap.", pain: "Outdated IT infrastructure and fragmented digital initiatives.", solution: "Comprehensive EA office to drive transformation efforts.", deliverables: ["EA Office", "Strategy & Roadmap", "Governance Models", "IT Portfolio Assessment"] },
+            { id: 22, title: "SAGO - EA Practice & Tool Implementation", client: "Saudi Grains Organization", category: "Enterprise Architecture", overview: "Established EA practice using TOGAF and iServer tool for streamlined governance.", pain: "Redundant systems and lack of centralized architecture repository.", solution: "Structured EA practice using iServer for mapping business and technology landscape.", deliverables: ["TOGAF-based EA Practice", "iServer Deployment", "Target Architecture Models", "Governance Framework"] },
+            { id: 29, title: "Eastern Province Municipality - EA Office", client: "Eastern Province Municipality", category: "Enterprise Architecture", overview: "Establishment of a dedicated EA Office for the municipality.", pain: "Lack of architectural oversight in municipal projects.", solution: "Defined EA governance and operating model.", deliverables: ["EA Office Setup", "Operating Procedures", "Architecture Principles", "Tool Selection"] },
+
+            // Group 3: Governance, Quality & Compliance
+            { id: 5, title: "SCFHS – Digital Transformation & Governance", client: "SCFHS", category: "Governance & Quality", overview: "Improved certification and licensing of healthcare professionals via digital governance.", pain: "Manual processes leading to delays in certification.", solution: "Robust digital platform automating certification and compliance tracking.", deliverables: ["Centralized certification system", "Automated compliance tracking", "Governance frameworks", "National healthcare integration"] },
+            { id: 8, title: "Nazaha – Governance and ITSM Framework", client: "Nazaha", category: "Governance & Quality", overview: "Established ITSM framework to enhance transparency and accountability.", pain: "Inconsistent IT governance and lack of accountability.", solution: "Governance framework incorporating ITIL and COBIT standards.", deliverables: ["Governance Framework", "ITSM Processes", "Compliance Tools", "Training Programs"] },
+            { id: 9, title: "Tahakom – Governance Process Optimization", client: "Tahakom", category: "Governance & Quality", overview: "Optimized governance processes to enhance efficiency and compliance.", pain: "Inefficient decision-making and compliance gaps.", solution: "Governance optimization framework with automation tools.", deliverables: ["Governance Policies", "Compliance Tools", "Standardized Processes", "Training"] },
+            { id: 13, title: "HRDF – Reviewing DX Maturity Level", client: "HRDF", category: "Governance & Quality", overview: "Evaluated the digital transformation maturity level.", pain: "Lack of understanding of digital maturity and resource allocation.", solution: "Structured maturity assessment model to evaluate capabilities.", deliverables: ["Assessment Report", "Gap Analysis", "Strategic Recommendations", "Improvement Framework"] },
+            { id: 14, title: "GASGI - DX Maturity & Qiyas Requirements", client: "GASGI", category: "Governance & Quality", overview: "Assessed digital capabilities against Qiyas requirements.", pain: "Challenges integrating digital services and meeting Qiyas benchmarks.", solution: "Evaluation framework benchmarking services against Qiyas standards.", deliverables: ["Maturity Assessment", "Gap Analysis", "Qiyas Recommendations", "Roadmap"] },
+            { id: 15, title: "Emirate of Tabuk Province - DX & ISO", client: "Emirate of Tabuk", category: "Governance & Quality", overview: "Digital transformation project aimed at ISO compliance.", pain: "Challenges in digitalizing services while ensuring ISO compliance.", solution: "Phased digital transformation strategy integrating ISO standards.", deliverables: ["DX Framework", "ISO Compliance Strategy", "Implementation Plan", "Performance Measurement"] },
+            { id: 18, title: "Ministry of Sports - DX Level & Qiyas", client: "Ministry of Sports", category: "Governance & Quality", overview: "Strategic DX initiative to align with national strategies and Qiyas.", pain: "Challenges meeting national benchmarks and Qiyas requirements.", solution: "Comprehensive maturity assessment and transformation roadmap.", deliverables: ["Maturity Assessment", "DX Roadmap", "Qiyas Compliance", "Enhancement Plan"] },
+            { id: 20, title: "ELM – ITSM & ISO 20000-1 Certification", client: "ELM", category: "Governance & Quality", overview: "Enhanced IT service management via ISO 20000-1 standards.", pain: "Non-standardized ITSM practices and service inefficiencies.", solution: "Structured ITSM framework incorporating ITIL best practices.", deliverables: ["ITSM Implementation", "ISO 20000-1 Certification", "Process Automation", "Knowledge Transfer"] },
+            { id: 27, title: "Qiyas 10 EA Requirements for Ministry of Communication", client: "Ministry of Communication", category: "Governance & Quality", overview: "Defined and aligned EA requirements for Qiyas 10 initiative.", pain: "Need to align government tech services with national DX goals.", solution: "Roadmap for compliance with Qiyas 10 standards and governance framework.", deliverables: ["EA Maturity Assessment", "Strategic Roadmap", "Governance Framework", "Implementation Guidelines"] },
+            { id: 28, title: "ITSM Implementation for SVTS", client: "SVTS", category: "Governance & Quality", overview: "Implementation of ITSM processes and governance.", pain: "Ad-hoc service management processes.", solution: "Standardized ITSM implementation.", deliverables: ["ITSM Processes", "Governance Model", "Service Catalog", "KPIs"] },
+            { id: 30, title: "NEA Certificate for Civil Affairs - Eastern Province", client: "Eastern Province Municipality", category: "Governance & Quality", overview: "Preparation and audit support for the NEA certificate.", pain: "Meeting NEA standards for civil services.", solution: "Gap analysis and remediation planning.", deliverables: ["NEA Readiness Assessment", "Remediation Plan", "Documentation Support", "Audit Facilitation"] },
+            { id: 31, title: "Qiyas 11 Preparation for Eastern Region Dev Authority", client: "Eastern Region Development Authority", category: "Governance & Quality", overview: "Preparation for Qiyas 11 EA requirements.", pain: "Aligning with the latest Qiyas standards.", solution: "Comprehensive preparation roadmap.", deliverables: ["Gap Analysis", "Compliance Roadmap", "Architecture Updates", "Training"] },
+            { id: 32, title: "Qiyas Prep for Emirate of Eastern Province", client: "Emirate of Eastern Province", category: "Governance & Quality", overview: "Qiyas preparation requirements for the Emirate.", pain: "Ensuring compliance with digital governance standards.", solution: "Detailed compliance assessment and planning.", deliverables: ["Compliance Report", "Action Plan", "Process Improvement", "Validation"] },
+            { id: 37, title: "Saudi Space Agency - Maturity Assessment Audit", client: "Saudi Space Agency", category: "Governance & Quality", overview: "Digital transformation maturity assessment audit.", pain: "Need to benchmark current digital capabilities.", solution: "Conducted rigorous audit and maturity scoring.", deliverables: ["Audit Report", "Maturity Scorecard", "Benchmarking", "Recommendations"] },
+            { id: 40, title: "TAHAKOM EA and ITSM Auditing", client: "Tahakom", category: "Governance & Quality", overview: "Audited existing EA and ITSM frameworks.", pain: "Ensuring current frameworks adhere to best practices.", solution: "Comprehensive auditing and optimization recommendations.", deliverables: ["Audit Report", "Gap Analysis", "Optimization Plan", "Compliance Certificate"] },
+
+            // Group 4: Data, Security & Business Continuity
+            { id: 7, title: "Tahakom – Data Migration", client: "Tahakom", category: "Data & Security", overview: "Consolidated legacy databases into a modern, scalable cloud infrastructure.", pain: "Slow, fragmented legacy data systems limiting real-time processing.", solution: "Hybrid cloud strategy with AI-driven ETL automation.", deliverables: ["Migration to Cloud-Native Platform", "ETL Processes", "Data Validation Framework", "Analytics Systems"] },
+            { id: 11, title: "Royal Protocol – Business Continuity & Data Management", client: "Royal Protocol", category: "Data & Security", overview: "Developed comprehensive BCP and data governance strategy.", pain: "Ensuring data security and operational resilience against threats.", solution: "Structured BCP with automated data replication and governance model.", deliverables: ["Business Continuity Plan", "Data Management Strategy", "Disaster Recovery", "Training Programs"] },
+            { id: 12, title: "SASO – Business Continuity and CX", client: "SASO", category: "Data & Security", overview: "Strengthened business continuity while enhancing customer experience.", pain: "Operational disruptions and inefficient service processes.", solution: "Cloud-based backups, failover mechanisms, and AI-driven support.", deliverables: ["BC Framework", "CX Enhancement", "Data Analytics", "Digital Infrastructure"] },
+
+            // Group 5: Innovation & Modernization
+            { id: 24, title: "DGA - Service Architecting (BONIA Project)", client: "Digital Government Authority", category: "Innovation", overview: "Architected digital services and integrated them with 'Raqmi' portal.", pain: "Fragmentation and inconsistencies in digital service delivery.", solution: "Structured service architecture using SoftwareAG tools.", deliverables: ["Service Architecture", "Raqmi Integration", "API Management", "Service Catalogs"] },
+            { id: 25, title: "STC Digital Competencies “Tamkeen”", client: "STC", category: "Innovation", overview: "Program to enhance digital competencies in cloud, cyber, AI, and data.", pain: "Workforce lacking skills in emerging technologies.", solution: "Structured digital competency framework with tailored training.", deliverables: ["Upskilling Programs", "Training Modules", "Certification Pathways", "Performance Framework"] },
+            { id: 26, title: "STC API Management Program", client: "STC", category: "Innovation", overview: "Modernized integration of digital services via API ecosystem.", pain: "Inefficient integration and inconsistent security protocols.", solution: "Centralized API management solution with standardized governance.", deliverables: ["API Management Framework", "API Gateways", "Security Protocols", "Developer Portals"] },
+            { id: 33, title: "E-Bike Tracking MVP Analysis", client: "Eastern Province Municipality", category: "Innovation", overview: "Business analysis and requirements for an E-Bike tracking MVP.", pain: "Need for digital tracking solutions for municipal bikes.", solution: "Defined business requirements and MVP architecture.", deliverables: ["Business Analysis Doc", "Requirements Specification", "MVP Scope", "User Stories"] },
+            { id: 34, title: "2WheelSafe Portal Architecture", client: "Eastern Province Municipality", category: "Innovation", overview: "MVP plus Technology and Application Architecture for the portal.", pain: "Need for a robust architecture to support the 2WheelSafe platform.", solution: "End-to-end technical architecture design.", deliverables: ["Application Architecture", "Technology Stack", "Data Model", "Integration Design"] },
+            { id: 39, title: "E-Bike Tracking MVP Analysis (Phase 2)", client: "Eastern Province Municipality", category: "Innovation", overview: "Further business analysis for the E-Bike project expansion.", pain: "Scaling the existing MVP requirements.", solution: "Detailed requirement analysis for expansion.", deliverables: ["Updated Requirements", "Process Flows", "Gap Analysis", "Expansion Plan"] }
+        ];
+
+        const categories = [
+            {
+                id: "Digital Transformation",
+                title: "Digital Transformation",
+                desc: "Comprehensive strategies to modernize government and banking sectors through digitization, AI, and cloud adoption.",
+                img: "https://picsum.photos/seed/digital/400/250"
+            },
+            {
+                id: "Enterprise Architecture",
+                title: "Enterprise Architecture",
+                desc: "Establishing EA offices, TOGAF frameworks, and aligning IT investments with business goals for major entities.",
+                img: "https://picsum.photos/seed/architecture/400/250"
+            },
+            {
+                id: "Governance & Quality",
+                desc: "Ensuring compliance with ISO, Qiyas, ITIL, and COBIT standards. Includes auditing and maturity assessments.",
+                title: "Governance & Quality",
+                img: "https://picsum.photos/seed/meeting/400/250"
+            },
+            {
+                id: "Data & Security",
+                title: "Data & Security",
+                desc: "Large-scale data migration, business continuity planning (BCP), and disaster recovery for critical infrastructure.",
+                img: "https://picsum.photos/seed/server/400/250"
+            },
+            {
+                id: "Innovation",
+                title: "Innovation & Modernization",
+                desc: "API management, MVP development, and digital competency building programs (e.g., STC Tamkeen).",
+                img: "https://picsum.photos/seed/tech/400/250"
+            }
+        ];
+
+        // --- DOM ELEMENTS ---
+        const groupsContainer = document.getElementById('groups-container');
+        const projectResults = document.getElementById('project-results');
+        const projectsGrid = document.getElementById('projects-grid');
+        const categoryTitle = document.getElementById('category-title');
+        const modal = document.getElementById('project-modal');
+
+        // --- INITIALIZATION ---
+        function init() {
+            renderGroups();
+        }
+
+        // --- RENDER GROUPS ---
+        function renderGroups() {
+            groupsContainer.innerHTML = categories.map(cat => {
+                const count = projectsData.filter(p => p.category === cat.id).length;
+                return `
+                <div class="group-card" onclick="filterProjects('${cat.id}')">
+                    <div class="group-img" style="background-image: url('${cat.img}')"></div>
+                    <div class="group-content">
+                        <h3 class="group-title">${cat.title}</h3>
+                        <p class="group-desc">${cat.desc}</p>
+                        <div class="group-count">${count} Projects</div>
+                    </div>
+                </div>
+                `;
+            }).join('');
+        }
+
+        // --- FILTER & SHOW PROJECTS ---
+        function filterProjects(categoryId) {
+            const categoryObj = categories.find(c => c.id === categoryId);
+            
+            // Update Title
+            categoryTitle.textContent = categoryObj.title;
+
+            // Filter Data
+            const filteredProjects = projectsData.filter(p => p.category === categoryId);
+
+            // Render Projects
+            projectsGrid.innerHTML = filteredProjects.map(project => `
+                <div class="project-item" onclick="openProject(${project.id})">
+                    <h3>${project.title}</h3>
+                    <div class="project-client">${project.client}</div>
+                </div>
+            `).join('');
+
+            // Toggle Views
+            groupsContainer.style.display = 'none';
+            projectResults.style.display = 'block';
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+
+        // --- BACK TO GROUPS ---
+        function showGroups() {
+            projectResults.style.display = 'none';
+            groupsContainer.style.display = 'grid';
+            window.scrollTo({ top: 200, behavior: 'smooth' });
+        }
+
+        // --- MODAL FUNCTIONS ---
+        function openProject(id) {
+            const project = projectsData.find(p => p.id === id);
+            
+            // Populate Modal
+            document.getElementById('modal-title').textContent = project.title;
+            document.getElementById('modal-client-location').innerHTML = `<strong>Client:</strong> ${project.client} | <strong>Category:</strong> ${project.category}`;
+            document.getElementById('modal-overview').textContent = project.overview;
+            document.getElementById('modal-pain').textContent = project.pain;
+            document.getElementById('modal-solution').textContent = project.solution;
+            
+            // Deliverables List
+            const delList = document.getElementById('modal-deliverables');
+            delList.innerHTML = project.deliverables.map(d => `<li>${d}</li>`).join('');
+
+            // Show Modal
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeModal(event) {
+            if (event.target === modal) {
+                closeModalDirectly();
+            }
+        }
+
+        function closeModalDirectly() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Run Init
+        init();
+
+    </script>
+</body>
+</html>
